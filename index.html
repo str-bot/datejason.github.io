@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Date Jason</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      font-family: 'Inter', sans-serif;
+      background: #0e0e12;
+      color: #e0e0e0;
+      overflow: hidden;
+    }
+
+    /* Neon background + particles */
+    .bg {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      overflow: hidden;
+      z-index: -2;
+    }
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: transparent url('https://raw.githubusercontent.com/JulianLaval/canvas-particle-network/master/img/stars.png') repeat top center;
+      animation: moveStars 100s linear infinite;
+    }
+    @keyframes moveStars {
+      from { background-position: 0 0; }
+      to { background-position: 10000px 5000px; }
+    }
+
+    /* Loader */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: #0e0e12;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid #222;
+      border-top: 5px solid #00f6ff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Container */
+    .container {
+      max-width: 800px;
+      margin: 3rem auto;
+      background: rgba(20, 20, 28, 0.95);
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+      z-index: 1;
+      position: relative;
+      overflow: auto;
+    }
+
+    .hero-image {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+    }
+
+    /* Neon SVG */
+    .neon-header {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .neon-header svg {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+    }
+
+    /* Typing effect */
+    .tagline {
+      font-family: 'Orbitron', sans-serif;
+      color: #a0f0ff;
+      font-size: 1.25rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      min-height: 1.6em;
+    }
+
+    h2 {
+      font-family: 'Orbitron', sans-serif;
+      color: #ff00f6;
+      text-shadow: 0 0 6px #ff00f6;
+    }
+
+    p {
+      line-height: 1.7;
+      color: #ddd;
+      margin-bottom: 1rem;
+    }
+
+    .links a {
+      display: block;
+      text-align: center;
+      margin: 0.5rem 0;
+      padding: 0.75rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      color: white;
+      background: linear-gradient(135deg, #00f6ff, #ff00f6);
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+      transition: all 0.3s ease;
+    }
+    .links a:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255, 0, 246, 0.5);
+    }
+
+    /* Cursor trail */
+    .trail {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #00f6ff;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      box-shadow: 0 0 6px #00f6ff, 0 0 12px #00f6ff;
+      animation: fadeOut 0.5s forwards;
+    }
+    @keyframes fadeOut {
+      to { opacity: 0; transform: scale(2); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Background and loader -->
+<div class="bg"><div class="stars"></div></div>
+<div id="loader"><div class="spinner"></div></div>
+
+<!-- Music -->
+<audio id="bgmusic" autoplay loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/08/16/audio_9f13508b27.mp3?filename=cyberpunk-moonlight-115866.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Main content -->
+<div class="container" style="display:none;" id="mainContent">
+  <img src="jason.png" alt="Jason" class="hero-image" />
+  <div class="neon-header">
+    <svg viewBox="0 0 600 100">
+      <text x="50%" y="65%" dominant-baseline="middle" text-anchor="middle" font-size="48" fill="none" stroke="#00f6ff" stroke-width="2" font-family="Orbitron">
+        Hi, I'm Jason
+      </text>
+    </svg>
+  </div>
+  <div class="tagline" id="typed"></div>
+
+  <div class="section">
+    <h2>About Me</h2>
+    <p>
+      I’m Jason — 29, Asian, 5’5”, and working at the intersection of data, media, and design. I've been a product manager at Hearst Magazines, where I helped shape the digital experiences for some of the biggest names in publishing — think Cosmopolitan, Esquire, Oprah’s Daily and more. Before that, I worked on products at The Wall Street Journal, Barron’s, Vizio, and Kamcord (which became part of Lyft).
+    </p>
+    <p>
+      I’m currently open to new opportunities and exploring what’s next — professionally and personally. I’m always drawn to thoughtful design and solving real problems for users, but also ready to move for the right role — or the right girl. I love cities, fast cars, cute cats (working up to actually getting one), and competitive video games. I’m vain (facts), funny (I try), and serious about building something lasting — maybe with you?
+    </p>
+    <p>
+      What am I looking for? A soft, pretty Asian girl with a clean, sweet vibe. Dyed hair is cool, just not big on tattoos. You don’t need to love video games, but if you’re down to chill while I play (or even better, play with me), we’ll get along. I believe in good energy, loyalty, and showing up for each other — and I’m not afraid to relocate if you’re the right one.
+    </p>
+  </div>
+
+  <div class="section links">
+    <a href="https://www.linkedin.com/in/INSERT-JASON-LINKEDIN-HERE" target="_blank">LinkedIn</a>
+    <a href="https://www.instagram.com/INSERT-JASON-INSTAGRAM-HERE" target="_blank">Instagram</a>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script>
+  // Typing effect
+  const tagline = "Product Manager • Gamer • Lowkey Hopeless Romantic";
+  let i = 0;
+  function type() {
+    const typed = document.getElementById("typed");
+    if (i < tagline.length) {
+      typed.innerHTML += tagline.charAt(i);
+      i++;
+      setTimeout(type, 50);
+    }
+  }
+
+  // Loader logic
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      document.getElementById("loader").style.display = "none";
+      document.getElementById("mainContent").style.display = "block";
+      type();
+    }, 1800);
+  });
+
+  // Cursor trail
+  document.addEventListener("mousemove", function(e) {
+    const dot = document.createElement("div");
+    dot.className = "trail";
+    dot.style.left = `${e.pageX}px`;
+    dot.style.top = `${e.pageY}px`;
+    document.body.appendChild(dot);
+    setTimeout(() => dot.remove(), 500);
+  });
+</script>
+
+</body>
+</html>
