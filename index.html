@@ -12,10 +12,10 @@
       font-family: 'Inter', sans-serif;
       background: #0e0e12;
       color: #e0e0e0;
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
 
-    /* Neon background + particles */
     .bg {
       position: fixed;
       width: 100%;
@@ -24,6 +24,7 @@
       overflow: hidden;
       z-index: -2;
     }
+
     .stars {
       position: absolute;
       width: 100%;
@@ -31,34 +32,12 @@
       background: transparent url('https://raw.githubusercontent.com/JulianLaval/canvas-particle-network/master/img/stars.png') repeat top center;
       animation: moveStars 100s linear infinite;
     }
+
     @keyframes moveStars {
       from { background-position: 0 0; }
       to { background-position: 10000px 5000px; }
     }
 
-    /* Loader */
-    #loader {
-      position: fixed;
-      inset: 0;
-      background: #0e0e12;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-    }
-    .spinner {
-      width: 50px;
-      height: 50px;
-      border: 5px solid #222;
-      border-top: 5px solid #00f6ff;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    /* Container */
     .container {
       max-width: 800px;
       margin: 3rem auto;
@@ -66,9 +45,8 @@
       padding: 2rem;
       border-radius: 16px;
       box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
-      z-index: 1;
       position: relative;
-      overflow: auto;
+      z-index: 1;
     }
 
     .hero-image {
@@ -78,18 +56,17 @@
       box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
     }
 
-    /* Neon SVG */
     .neon-header {
       text-align: center;
       margin-bottom: 1rem;
     }
+
     .neon-header svg {
       width: 100%;
       max-width: 600px;
       height: auto;
     }
 
-    /* Typing effect */
     .tagline {
       font-family: 'Orbitron', sans-serif;
       color: #a0f0ff;
@@ -124,12 +101,12 @@
       box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
       transition: all 0.3s ease;
     }
+
     .links a:hover {
       transform: scale(1.05);
       box-shadow: 0 0 20px rgba(255, 0, 246, 0.5);
     }
 
-    /* Cursor trail */
     .trail {
       position: absolute;
       width: 10px;
@@ -141,6 +118,7 @@
       box-shadow: 0 0 6px #00f6ff, 0 0 12px #00f6ff;
       animation: fadeOut 0.5s forwards;
     }
+
     @keyframes fadeOut {
       to { opacity: 0; transform: scale(2); }
     }
@@ -148,17 +126,16 @@
 </head>
 <body>
 
-<!-- Background and loader -->
+<!-- Animated background -->
 <div class="bg"><div class="stars"></div></div>
-<div id="loader"><div class="spinner"></div></div>
 
 <!-- Music -->
 <audio id="bgmusic" autoplay loop>
   <source src="https://cdn.pixabay.com/download/audio/2022/08/16/audio_9f13508b27.mp3?filename=cyberpunk-moonlight-115866.mp3" type="audio/mpeg">
 </audio>
 
-<!-- Main content -->
-<div class="container" style="display:none;" id="mainContent">
+<!-- Main Content -->
+<div class="container" id="mainContent">
   <img src="jason.png" alt="Jason" class="hero-image" />
   <div class="neon-header">
     <svg viewBox="0 0 600 100">
@@ -201,15 +178,7 @@
       setTimeout(type, 50);
     }
   }
-
-  // Loader logic
-  window.addEventListener("load", () => {
-    setTimeout(() => {
-      document.getElementById("loader").style.display = "none";
-      document.getElementById("mainContent").style.display = "block";
-      type();
-    }, 1800);
-  });
+  window.addEventListener("load", type);
 
   // Cursor trail
   document.addEventListener("mousemove", function(e) {
